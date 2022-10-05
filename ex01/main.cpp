@@ -1,7 +1,28 @@
-#include <iostream>
-
-#include "Contact.hpp"
 #include "PhoneBook.hpp"
+
+int PhoneBook::error_handler(std::string input) {
+
+    std::cout << COLOR_RED << "Invalid option!" << COLOR_DEFAULT << std::endl;
+    std::cout << "Do you want to try again? yes/no : ";
+    do
+    {
+        std::getline(std::cin, input);
+        if (input.compare("yes") == 0)
+        {
+            break;
+        }
+        else if (input.compare("no") == 0)
+            return -1;
+        else {
+            std::cout << COLOR_RED << "The program accepts only yes/no input!" << COLOR_DEFAULT << std::endl;
+            std::cout << "Do you want to try again? yes/no : ";
+            continue;
+        }
+        std::cout << "Please enter a valid input (yes/no)" << std::endl;
+    }
+    while(true);
+    return 1;
+}
 
 int main(void) {
     std::string input;
@@ -26,14 +47,9 @@ int main(void) {
         else if (input.compare("SEARCH") == 0)
             phonebook1.search_contact();
         else
-        {  
-            std::cout << "Invalid option!" << std::endl;
-            std::cout << "Do you want to try again? yes/no : ";
-            getline(std::cin, input);
-            if (input.compare("yes") == 0)
-                continue;
-            else if (input.compare("no") == 0)
-                return -1;
+        {
+            if (phonebook1.error_handler(input) == -1)
+                return (-1);
         }
     }
 }

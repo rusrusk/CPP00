@@ -49,7 +49,7 @@ void PhoneBook::add_contact(void) {
     std::cout << "FIRST NAME : ";
     while (std::getline(std::cin, user_input)) {
         if (user_input.empty()) {
-            std::cout << "Contact field can't have an empty field!"
+            std::cout << COLOR_RED << "Contact field can't have an empty field!" << COLOR_DEFAULT
                       << std::endl;
            return;
         } else
@@ -60,7 +60,7 @@ void PhoneBook::add_contact(void) {
     std::cout << "LAST NAME : ";
     while (std::getline(std::cin, user_input)) {
         if (user_input.empty()) {
-            std::cout << "Contact field can't have an empty field!"
+            std::cout << COLOR_RED << "Contact field can't have an empty field!" << COLOR_DEFAULT
                       << std::endl;
             return;
         } else
@@ -70,7 +70,7 @@ void PhoneBook::add_contact(void) {
     std::cout << "NICK NAME : ";
     while (std::getline(std::cin, user_input)) {
         if (user_input.empty()) {
-            std::cout << "Contact field can't have an empty field!"
+            std::cout << COLOR_RED << "Contact field can't have an empty field!" << COLOR_DEFAULT
                       << std::endl;
             return;
         } else
@@ -81,7 +81,7 @@ void PhoneBook::add_contact(void) {
     while (std::getline(std::cin, user_input)) {
         if (std::cin.eof()) break;
         if (user_input.empty()) {
-            std::cout << "Contact field can't have an empty field!"
+            std::cout << COLOR_RED << "Contact field can't have an empty field!" << COLOR_DEFAULT
                       << std::endl;
             return;
         } else
@@ -92,7 +92,7 @@ void PhoneBook::add_contact(void) {
     while (std::getline(std::cin, user_input)) {
         if (std::cin.eof()) break;
         if (user_input.empty()) {
-            std::cout << "Contact field can't have an empty field!"
+            std::cout << COLOR_RED << "Contact field can't have an empty field!" << COLOR_DEFAULT
                       << std::endl;
             return;
         } else
@@ -101,13 +101,12 @@ void PhoneBook::add_contact(void) {
     tmpContact.set_DarkestSecret(user_input);
     this->_myContacts[_nb_of_contacts % 8] = tmpContact;
     ++_nb_of_contacts;
-    
 }
 
 
 void PhoneBook::search_contact() {
     int i;
-    int index;
+    int index = 0;
     std::string input;
 
     i = 0;
@@ -117,19 +116,23 @@ void PhoneBook::search_contact() {
         i++;
     }
     if (this->_nb_of_contacts == 0)
-        std::cout << "Awesome Phonebook is empty" << std::endl;
+        std::cout << COLOR_RED << "AWESOME BOOK IS EMPTY" << COLOR_DEFAULT << std::endl;
     else {
         std::cout << "Please, provide the index of the entry to display : ";
         while (getline(std::cin, input)) {
+            std::cout << std::endl;
             if (std::cin.eof()) break;
             index = atoi(input.c_str());
-            if (index >= 0 && index <= 7) {
-                _myContacts[index].get_input();
-                break;
-            } else {
-                std::cout << "Sorry! Invalid index input!" << std::endl;
+            if (index < 0 || index >= this->_nb_of_contacts) {
+                std::cout << COLOR_RED << "Sorry! Invalid index input!" << COLOR_DEFAULT << std::endl;
                 return;
             }
+            else if (!isdigit(input.c_str()[0])) {
+                std::cout << COLOR_RED << "Sorry! The index cannot have a character representation!" << COLOR_DEFAULT << std::endl;
+                return;
+            }
+                _myContacts[index].get_input();
+                break;
         }
     }
 }

@@ -29,7 +29,7 @@ class PhoneBook {
     void search_contact();
     void prompt_input(void);
     void print_headline(void);
-
+    int error_handler(std::string input);
 
    private:
     // member variables
